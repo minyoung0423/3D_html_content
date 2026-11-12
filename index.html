@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 WEB & 3D DATA WORKSHOP</title>
+    <style>
+        /* 깔끔한 국문 출력을 위한 웹 폰트 로드 */
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #121420; /* 원본 UI와 동일한 짙은 네이비 배경 */
+            color: #ffffff;
+            font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        /* 헤더 섹션 영역 */
+        .header-top {
+            color: #4ade80; /* 상단 민트색 텍스트 */
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 24px;
+            word-break: keep-all;
+        }
+
+        .main-desc {
+            color: #a1a1aa; /* 회색 설명 텍스트 */
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-bottom: 60px;
+            word-break: keep-all;
+        }
+
+        /* 2단 그리드 레이아웃 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        /* 카드 UI 스타일 */
+        .card {
+            background-color: #1e2030;
+            border: 1px solid #2d3047;
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: #4b4e6d;
+        }
+
+        .card-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+        }
+
+        .label-purple { color: #818cf8; }
+        .label-blue { color: #60a5fa; }
+
+        .card-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            word-break: keep-all;
+        }
+
+        .card-desc {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            flex-grow: 1;
+            word-break: keep-all;
+        }
+
+        /* 버튼 공통 스타일 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #ffffff;
+            width: fit-content;
+            margin-bottom: 24px;
+            transition: background-color 0.2s;
+        }
+
+        /* 카드별 버튼 컬러 적용 */
+        .btn-purple { background-color: #818cf8; }
+        .btn-purple:hover { background-color: #6366f1; }
+
+        .btn-teal { background-color: #2dd4bf; }
+        .btn-teal:hover { background-color: #14b8a6; }
+
+        /* 하단 텍스트 링크 */
+        .text-link {
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        .text-link:hover { text-decoration: underline; }
+        
+        .link-purple { color: #818cf8; }
+        .link-blue { color: #3b82f6; }
+
+        /* 링크 화살표 아이콘 */
+        .arrow::after {
+            content: " ↗";
+            font-family: system-ui;
+            margin-left: 4px;
+        }
+
+        /* 모바일 반응형 처리 */
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.2rem; }
+            .card-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 영역 -->
+        <div class="header-top">2026 · WEB & 3D WORKSHOP</div>
+        <h1 class="main-title">웹 기반 카메라 제어와<br>3D 렌더링 실습.</h1>
+        <p class="main-desc">
+            가상의 고등학교 환경 데이터를 활용한 실습 대신, 실제 웹 브라우저 기반의 카메라 미디어 제어 및 Three.js를 활용한 3D 객체(한국 버스) 렌더링을 실습합니다. 별도 설정 없이 클릭만으로 웹앱을 바로 구동해볼 수 있습니다.
+        </p>
+
+        <!-- 카드 레이아웃 그리드 -->
+        <div class="card-grid">
+            <!-- 첫 번째 카드 (스마트 카메라) -->
+            <div class="card">
+                <div class="card-label label-purple">COURSE A / WEB SENSOR</div>
+                <h2 class="card-title">클릭만으로<br>스마트 카메라 실습하기</h2>
+                <p class="card-desc">
+                    웹 브라우저의 미디어 장치 API를 활용하여 카메라 권한을 획득하고 실시간 비디오 스트림을 제어하는 안정적인 버전을 실습합니다.
+                </p>
+                <a href="smart_classroom_camera_stable.html" class="btn btn-purple arrow">카메라 앱 실행</a>
+                <a href="smart_classroom_camera_stable.html" class="text-link link-purple arrow">결과 확인하기</a>
+            </div>
+
+            <!-- 두 번째 카드 (ThreeJS 한국 버스) -->
+            <div class="card">
+                <div class="card-label label-blue">COURSE B / 3D WEBXR</div>
+                <h2 class="card-title">클릭만으로<br>3D 한국 버스 실습하기</h2>
+                <p class="card-desc">
+                    Three.js 라이브러리를 이용하여 웹 브라우저 상에서 3D 모델(한국 버스)을 불러오고 자유롭게 인터랙션하는 환경을 체험할 수 있습니다.
+                </p>
+                <a href="ThreeJS_korean_bus.html" class="btn btn-teal arrow">3D 버스 앱 실행</a>
+                <a href="ThreeJS_korean_bus.html" class="text-link link-blue arrow">결과 화면 보기</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

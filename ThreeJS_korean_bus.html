@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08131f">
+<title>한국형 전기 시내버스 | 스마트팩토리 3D 디지털 트윈</title>
+<style>
+:root{--bg:#08131f;--panel:#101d2b;--line:#233449;--muted:#8da3ba;--text:#e5eef9;--blue:#3c97d5;--gold:#ffd180;--green:#6bd2ac}*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden;font-family:'DM Sans','Noto Sans KR',Arial,sans-serif;background:#07111d;color:var(--text)}button,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,select:focus-visible{outline:2px solid #80d4ff;outline-offset:2px}#app{display:grid;grid-template-columns:292px minmax(0,1fr) 272px;width:100%;height:100%;min-height:0}.sidebar,.inspect{min-height:0;overflow-y:auto;background:#0e1927;z-index:4;scrollbar-color:#34485f transparent;scrollbar-width:thin}.sidebar{padding:24px 18px 22px;border-right:1px solid #253648}.inspect{padding:27px 18px 22px;border-left:1px solid #253648;background:#111d2b}.brand{display:flex;gap:11px;align-items:center;margin-bottom:26px}.brand-icon{font-weight:800;letter-spacing:-3px;width:48px;height:48px;border-radius:11px;background:linear-gradient(135deg,#319bd9,#0b4e86);display:grid;place-items:center;font-size:24px;box-shadow:0 7px 22px #0f7aca40}.brand-icon span{font-size:14px;position:relative;top:-8px;color:#bceaff}.eyebrow{font-size:9px;letter-spacing:1.25px;font-weight:800;color:#67b8e6}.brand h1{font-size:16px;letter-spacing:.25px;margin:4px 0 0;font-weight:800;line-height:1.15}.brand h1 span{color:#8bd1f6}.factory-label{font-size:11px;border:1px solid #244855;background:#092b35;border-radius:9px;padding:10px;line-height:1.5;margin-bottom:26px;color:#d8f5fb}.factory-label small{display:block;color:#8db1be;margin-left:17px;font-size:10px}.pulse,.live-dot{width:7px;height:7px;background:#4be0ad;border-radius:50%;box-shadow:0 0 0 3px #4be0ad1b;display:inline-block;margin-right:8px}.section-header{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:800;margin:22px 0 12px}.section-header span{font-size:10px;color:#54b8ef}.section-header small{margin-left:auto;color:#67859a;font-size:10px;font-weight:500}.stage-list{display:flex;flex-direction:column;gap:6px}.stage{width:100%;display:grid;grid-template-columns:32px 1fr 16px;gap:8px;text-align:left;border:1px solid transparent;background:transparent;color:#9aadc0;align-items:center;border-radius:9px;padding:11px 9px;transition:.18s}.stage:hover{background:#182a3b;color:#f2f9ff}.stage.active{border-color:#3375a0;background:#12314a;color:#f5fbff;box-shadow:inset 3px 0 0 #47b9ff}.stage.done .stage-num{background:#144f45;color:#76e5b8}.stage-num{border-radius:7px;padding:7px 4px;text-align:center;background:#172538;color:#76a0c0;font-size:11px;font-weight:800}.stage strong{font-size:12px;display:block;font-weight:700}.stage small{color:#7d92a9;font-size:10px;display:block;margin-top:3px}.stage .check{font-size:14px;color:#55d7a2}.stage.active small{color:#a0cbe3}.controls-row{display:flex;gap:7px;margin-bottom:9px}.control{flex:1}.controls-row button{min-width:0;border:1px solid #2b4055;border-radius:8px;padding:11px 5px;font-size:11px;font-weight:700;background:#1b2b3b;color:#d5e3ef}.controls-row button:hover{background:#294862}.controls-row .primary{flex:1.35;border-color:#2584bc;background:#197bb9;color:white}.controls-row.compact button{font-size:10px;padding:10px 4px}.controls-row button.toggled{border-color:#5dcbe3;background:#124560}.swatches{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px}.swatch{padding:8px 2px;background:#172635;color:#a8bbcc;border:1px solid #25394c;border-radius:8px;font-size:10px;font-weight:700;display:grid;justify-items:center;gap:6px}.swatch i{width:23px;height:23px;border:2px solid #fff7;border-radius:50%;display:block}.swatch.selected{border-color:#60bff4;color:#ebf8ff;background:#1e3e57}.slim-note{font-size:10px;line-height:1.7;color:#687e94;margin-top:23px}.viewport{position:relative;overflow:hidden;min-width:0;background:radial-gradient(circle at 40% 20%,#9cbdcb,#556776 63%,#233341);isolation:isolate}#world{position:absolute;inset:0}#world canvas{display:block;width:100%;height:100%;touch-action:none}.floating-header{position:absolute;top:0;left:0;right:0;z-index:2;padding:17px 22px;display:flex;align-items:center;justify-content:space-between;pointer-events:none;background:linear-gradient(180deg,#061424b8,transparent)}.head-title{display:flex;gap:10px;align-items:center}.head-title b{font-size:13px;display:block;text-shadow:0 1px 3px #0007}.head-title small{font-size:10px;color:#cedce7;letter-spacing:1px;margin-top:3px;display:block}.head-actions{display:flex;gap:9px;align-items:center}.head-actions button{pointer-events:auto;background:#12263ac9;color:white;border:1px solid #ffffff44;padding:9px 10px;border-radius:8px;font-size:11px}.head-actions button:hover{background:#20425b}.tag{color:#65e2c2;font-size:9px;letter-spacing:.6px;font-weight:800;border:1px solid #5cf6d154;padding:7px;border-radius:5px;background:#114b423e}.view-tools{position:absolute;top:85px;left:50%;transform:translateX(-50%);max-width:95%;display:flex;gap:3px;z-index:3;padding:5px;background:#081929b8;backdrop-filter:blur(9px);border:1px solid #bde7ff45;border-radius:11px;box-shadow:0 8px 30px #0003;overflow-x:auto}.view-tools button{white-space:nowrap;border:0;border-radius:7px;background:transparent;color:#b9cede;padding:9px 10px;font-size:11px;font-weight:700}.view-tools button:hover{background:#27506c}.view-tools button.active{background:#368fc7;color:white}.right-tools{position:absolute;right:20px;top:160px;display:flex;flex-direction:column;gap:8px;z-index:2}.right-tools button{width:52px;height:52px;border-radius:10px;background:#0c2030b9;backdrop-filter:blur(8px);border:1px solid #d4ebff4a;color:#f2f9ff;font-size:22px;box-shadow:0 5px 16px #0002}.right-tools button small{font-size:8px;letter-spacing:1px;display:block}.right-tools button.toggled{border-color:#71dfff;background:#195d7b}.bottom-bar{position:absolute;z-index:3;left:20px;right:20px;bottom:16px;border:1px solid #c5e8ff47;background:linear-gradient(95deg,#091827ed,#152d40e3);border-radius:13px;padding:16px 18px;box-shadow:0 12px 35px #08142077;backdrop-filter:blur(11px)}.progress-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.progress-head>div{display:flex;align-items:center;gap:13px}.progress-head strong{font-size:14px}.progress-n{font-size:9px;letter-spacing:1px;color:#89bfdc;font-weight:800}.progress-n b{font-size:18px;color:#6fd4ff}.progress-head #state-pill{font-size:10px;color:#a7dbff;border:1px solid #54798b;background:#21405499;border-radius:20px;padding:6px 9px}.progress-track{height:5px;border-radius:6px;background:#345067;margin:12px 0}.progress-track>div{height:100%;width:12.5%;border-radius:6px;background:linear-gradient(90deg,#2279d7,#67dfff);transition:width .3s}.progress-caption{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#b2c6d9;font-size:10px;line-height:1.5}.speed-select{white-space:nowrap;display:flex;gap:7px;align-items:center}.speed-select select{background:#1c3449;color:white;border:1px solid #416077;padding:4px 5px;border-radius:5px;font-size:11px}.inspect-heading small{color:#5ebfe8;font-weight:800;letter-spacing:1px;font-size:10px}.inspect-heading h2{margin:6px 0 18px;font-size:19px}.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.kpi-grid>div{border:1px solid #2a3f53;border-radius:10px;background:#14283a;padding:12px 10px}.kpi-grid small{display:block;font-size:10px;color:#8499aa;margin-bottom:6px}.kpi-grid b{font-size:21px;font-variant-numeric:tabular-nums}.kpi-grid b em{font-style:normal;font-size:10px;color:#7c9db0;margin-left:2px}.kpi-grid .status-word{font-size:17px;color:#90d3ee}.kpi-grid .quality{font-size:17px;color:#d3b985}.inspect-divider{height:1px;background:#283b4e;margin:21px 0}.inspect-subhead{font-size:12px;font-weight:800;display:flex;justify-content:space-between;margin-bottom:12px}.inspect-subhead span{font-size:9px;color:#5388a0}.part-detail{min-height:167px;border:1px solid #2d465c;border-radius:12px;padding:15px;background:#162a3b}.part-icon{font-size:26px;color:#62c2f2;margin-bottom:8px}.part-detail b{display:block;font-size:13px}.part-detail p,.stage-explain p{font-size:11px;line-height:1.75;color:#a7b9ca;margin:8px 0 0}.stage-explain b{font-size:12px;color:#72caed}.event-log{display:flex;flex-direction:column;gap:7px;max-height:160px;overflow:auto}.event-log>div{border-left:2px solid #407b9d;padding:2px 0 3px 10px;font-size:10px;line-height:1.55;color:#9baebf}.event-log time{display:block;color:#5795b7;font-size:9px}.info-button{background:#16344c;color:#cbf0ff;border:1px solid #24658b;border-radius:9px;width:100%;padding:12px;font-size:12px;margin-top:22px}.info-button:hover{background:#225273}.loading,.fallback{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:linear-gradient(145deg,#122638,#243b48);padding:35px}.loading[hidden],.fallback[hidden]{display:none}.loading-art{font-size:40px;letter-spacing:-6px;color:#90dfff;font-weight:900;margin-bottom:12px}.loading b{font-size:19px}.loading p,.fallback p{font-size:12px;color:#c5d2dc;max-width:460px;line-height:1.7}.loading small{font-size:10px;color:#8eabbc}.loadbar{width:180px;height:4px;margin:16px;background:#3b5b6e;overflow:hidden;border-radius:5px}.loadbar i{display:block;width:60px;height:100%;background:#73deff;animation:load 1.4s ease-in-out infinite alternate}@keyframes load{from{transform:translateX(-60px)}to{transform:translateX(180px)}}.fallback svg{max-width:560px;width:100%;margin-bottom:20px}.fallback button{background:#2a8cc8;border:0;border-radius:8px;color:#fff;padding:9px 16px}.fallback details{margin-top:13px;font-size:11px;color:#a7cce5}.fallback pre{white-space:pre-wrap;max-width:420px;text-align:left}.hotspot{position:absolute;top:143px;left:20px;z-index:3;max-width:250px;padding:12px 15px;border:1px solid #a8e5ff55;border-radius:10px;background:#091d30e5;color:#cfeafa;font-size:11px;line-height:1.5;box-shadow:0 8px 22px #0004}.mobile-mask{display:none}#menu-toggle{display:none}dialog{background:#102132;color:#e4f3ff;border:1px solid #43718c;max-width:540px;width:90%;border-radius:14px;padding:26px;box-shadow:0 30px 80px #0008}dialog::backdrop{background:#04101ac7}dialog small{color:#72cce9;font-size:10px;letter-spacing:1.2px;font-weight:800}dialog h2{font-size:20px}dialog p,dialog li{font-size:12px;line-height:1.9;color:#b5ccdb}dialog ul{padding-left:20px}.close-help{float:right;background:transparent;color:white;border:0;font-size:18px;padding:4px 8px}
+@media(max-width:1250px){#app{grid-template-columns:260px minmax(0,1fr) 240px}.sidebar{padding:20px 12px}.inspect{padding:22px 12px}.view-tools button{font-size:10px;padding:8px}.floating-header{padding:15px}.tag{display:none}}
+@media(max-width:990px){#app{grid-template-columns:245px minmax(0,1fr)}.inspect{display:none}.view-tools{top:80px}}
+@media(max-width:690px){#app{display:block}.viewport{height:100vh}.sidebar{position:fixed;left:0;top:0;bottom:0;width:min(85vw,305px);z-index:22;transform:translateX(-100%);transition:transform .25s;box-shadow:13px 0 30px #0008}.sidebar.open{transform:translateX(0)}.mobile-mask.open{display:block;position:fixed;inset:0;background:#0008;z-index:21}#menu-toggle{display:block}.head-title b{font-size:11px}.head-title small{font-size:8px}.floating-header{padding:12px}.head-actions #screenshot{padding:7px;font-size:10px}.view-tools{top:65px;max-width:calc(100vw - 10px);left:5px;transform:none;overflow:auto;padding:3px}.view-tools button{font-size:10px;padding:7px 8px}.right-tools{top:120px;right:9px}.right-tools button{width:41px;height:41px;font-size:16px}.right-tools button small{font-size:7px}.bottom-bar{left:9px;right:9px;bottom:9px;padding:11px}.progress-head strong{font-size:12px}.progress-n b{font-size:15px}.progress-caption{font-size:9px}.progress-caption>span{max-width:70%}.hotspot{top:177px;left:10px}.head-title small{letter-spacing:0}}
+
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar" class="sidebar">
+    <div class="brand"><div class="brand-icon">B<span>+</span></div><div><div class="eyebrow">SMART FACTORY · DIGITAL TWIN</div><h1>BUS ASSEMBLY<span> LAB</span></h1></div></div>
+    <div class="factory-label"><span class="pulse"></span> 가상 조립라인 운영 중 <small>KR · 저상 전기 시내버스</small></div>
+    <div class="section-header"><span>01</span> 조립 공정 <small>8단계</small></div>
+    <div id="stage-list" class="stage-list">
+      <div class="stage"><span class="stage-num">01</span><span><strong>섀시 프레임</strong><small>강재 프레임 / 하부 플랫폼</small></span><span class="check">○</span></div>
+      <div class="stage"><span class="stage-num">02</span><span><strong>차축·바퀴</strong><small>액슬 / 휠 / 서스펜션</small></span><span class="check">○</span></div>
+      <div class="stage"><span class="stage-num">03</span><span><strong>배터리·전기 구동계</strong><small>고전압 배터리 / 모터</small></span><span class="check">○</span></div>
+      <div class="stage"><span class="stage-num">04</span><span><strong>차체 골격</strong><small>기둥 / 횡보 / 지붕 프레임</small></span><span class="check">○</span></div>
+      <div class="stage"><span class="stage-num">05</span><span><strong>외판·지붕 도장</strong><small>외장 패널 / 도장 / 루프</small></span><span class="check">○</span></div>
+      <div class="stage"><span class="stage-num">06</span><span><strong>창문·출입문</strong><small>안전유리 / 자동문 / 램프</small></span><span class="check">○</span></div>
+      <div class="stage"><span class="stage-num">07</span><span><strong>실내·편의시설</strong><small>좌석 / 손잡이 / 운전석</small></span><span class="check">○</span></div>
+      <div class="stage"><span class="stage-num">08</span><span><strong>완성·품질 검사</strong><small>전장 / 조명 / 기능 검사</small></span><span class="check">○</span></div>
+    </div>
+    <div class="section-header"><span>02</span> 자동 공정</div>
+    <div class="controls-row"><button id="prev" class="control" title="이전 단계"><span>◀</span> 이전</button><button id="play" class="primary control">▶ 자동 실행</button><button id="next" class="control">다음 <span>▶</span></button></div>
+    <div class="controls-row compact"><button id="reset">↺ 초기화</button><button id="door">도어 열기</button><button id="explode">분해 보기</button></div>
+    <div class="section-header"><span>03</span> 차체 도장 <small>대표 노선 색상</small></div>
+    <div class="swatches"><button class="swatch selected" data-color="blue" title="간선버스 파랑"><i style="background:#006dc5"></i>간선</button><button class="swatch" data-color="green" title="지선버스 초록"><i style="background:#269374"></i>지선</button><button class="swatch" data-color="red" title="광역버스 빨강"><i style="background:#c23d50"></i>광역</button><button class="swatch" data-color="yellow" title="순환버스 노랑"><i style="background:#d9af42"></i>순환</button></div>
+    <div class="slim-note">실제 제조사의 공정을 복제하지 않은 학습용 개념 모델입니다.</div>
+  </aside>
+  <main class="viewport">
+    <div id="world"></div>
+    <div class="floating-header">
+      <div class="head-title"><span class="live-dot"></span><div><b>한국형 저상 전기버스 조립공장</b><small>SMART FACTORY / ASSEMBLY BAY 01</small></div></div>
+      <div class="head-actions"><span class="tag">LIVE SIMULATION</span><button id="menu-toggle" title="왼쪽 패널 열기">☰</button><button id="screenshot" title="현재 3D 화면 이미지 저장">◩ 화면 저장</button></div>
+    </div>
+    <div id="loading" class="loading"><div class="loading-art">B+</div><b>3D 조립라인 불러오는 중</b><p>Three.js 모델·공장 조명·조립 공정을 준비합니다.</p><div class="loadbar"><i></i></div><small>네트워크 연결이 필요합니다.</small></div>
+    <div id="fallback" class="fallback" hidden>
+      <svg viewBox="0 0 880 360" role="img" aria-label="전기 버스 2D 구조 참고도"><defs><linearGradient id="paint" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#287bc2"/><stop offset="1" stop-color="#034e9d"/></linearGradient></defs><rect x="53" y="80" width="760" height="213" rx="32" fill="url(#paint)" stroke="#b4c5d7" stroke-width="6"/><rect x="65" y="105" width="730" height="91" rx="10" fill="#223949" stroke="#80a9bb" stroke-width="3"/><g stroke="#8ca7b8" stroke-width="8"><path d="M179 104v91M289 104v91M403 104v91M512 104v91M617 104v91M710 104v91"/></g><rect x="83" y="215" width="697" height="17" rx="7" fill="#e0e8ee" opacity=".8"/><circle cx="215" cy="282" r="49" fill="#181e25" stroke="#4b5766" stroke-width="8"/><circle cx="215" cy="282" r="23" fill="#bcc6cc"/><circle cx="666" cy="282" r="49" fill="#181e25" stroke="#4b5766" stroke-width="8"/><circle cx="666" cy="282" r="23" fill="#bcc6cc"/><rect x="605" y="111" width="90" height="84" fill="#17303f" opacity=".55"/><path d="M670 111v84" stroke="#bec9d1" stroke-width="5"/></svg>
+      <h2>Three.js 3D 장면을 불러오지 못했습니다</h2><p>위 그림은 <b>3D 화면이 아닌 2D 안내 그림</b>입니다. 인터넷 연결을 확인하거나 ZIP의 오프라인 라이브러리 설치 과정을 실행하세요.</p><button id="retry">다시 시도</button><details><summary>오류 정보</summary><pre id="error-text"></pre></details>
+    </div>
+    <div id="view-tools" class="view-tools" aria-label="카메라 시점">
+      <button class="active" data-view="overview">사선 전경</button><button data-view="side">측면</button><button data-view="front">전면</button><button data-view="rear">후면</button><button data-view="cabin">실내</button><button data-view="top">상부</button><button data-view="under">하부</button>
+    </div>
+    <div class="right-tools"><button id="xray" title="차체 반투명">◈<small>X-RAY</small></button><button id="spin" title="카메라 자동 회전">⟳<small>360°</small></button><button id="fit" title="기본 시점">⌖<small>RESET</small></button></div>
+    <div id="hotspot" class="hotspot" hidden>선택한 부품 정보</div>
+    <div class="bottom-bar"><div class="progress-head"><div><span class="progress-n">STEP <b id="step-no">01</b> / 08</span><strong id="step-title">하부 프레임</strong></div><span id="state-pill">조립 대기</span></div><div class="progress-track"><div id="progress-fill"></div></div><div class="progress-caption"><span id="step-desc">차량 하부 기초 구조를 형성합니다.</span><div class="speed-select"><label for="speed">재생 속도</label><select id="speed"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></div></div></div>
+    <div class="mobile-mask" id="mobile-mask"></div>
+  </main>
+  <aside class="inspect">
+    <div class="inspect-heading"><small>FACTORY MONITORING</small><h2>디지털 트윈 관제</h2></div>
+    <div class="kpi-grid"><div><small>공정 진행률</small><b id="kpi-progress">12.5<em>%</em></b></div><div><small>완료 공정</small><b id="kpi-modules">01<em>/ 08</em></b></div><div><small>작업 상태</small><b id="kpi-status" class="status-word">대기</b></div><div><small>가상 품질 상태</small><b id="kpi-quality" class="quality">준비</b></div></div>
+    <div class="inspect-divider"></div><div class="inspect-subhead">선택 부품 <span>CLICK IN 3D</span></div>
+    <div class="part-detail" id="part-detail"><div class="part-icon">⊞</div><b>부품을 선택하세요</b><p>3D 버스의 휠, 배터리, 차체, 도어 또는 좌석을 클릭하면 구조와 역할을 설명합니다.</p></div>
+    <div class="inspect-divider"></div><div class="inspect-subhead">현재 조립 단계</div>
+    <div class="stage-explain"><b id="explain-title">01 · 섀시 프레임</b><p id="explain-text">차량의 뼈대를 만드는 공정입니다.</p></div>
+    <div class="inspect-divider"></div><div class="inspect-subhead">공정 이벤트 로그</div><div id="log" class="event-log" aria-live="polite"></div>
+    <button id="info-button" class="info-button">조작 도움말 / 실습 안내</button>
+  </aside>
+</div>
+<dialog id="help"><button id="close-help" class="close-help">✕</button><small>EDUCATIONAL DIGITAL TWIN</small><h2>한국 시내버스 3D 조립공장</h2><p>파란색 간선버스와 비슷한 색을 사용한 가상 저상 전기버스입니다. 실제 제조사의 공정 순서·부품 치수·설비를 정밀 재현한 모델은 아닙니다.</p><ul><li><b>조립 단계</b>: 좌측 번호를 선택하거나 자동 실행하세요.</li><li><b>카메라</b>: 마우스 드래그로 회전, 휠로 확대·축소합니다. 실내/하부 관찰도 가능합니다.</li><li><b>부품 설명</b>: 조립된 부품을 클릭하면 오른쪽 패널에 정보가 나옵니다.</li><li><b>X-RAY</b>: 외판을 반투명 처리해 내부 구조를 확인합니다.</li><li><b>분해 보기</b>: 모듈을 공간적으로 펼쳐 조립 위치를 파악합니다.</li><li><b>도어 열기</b>: 유리·도어 장착 단계 이후 문을 움직입니다.</li><li><b>화면 저장</b>: 현재 3D 장면을 PNG로 저장합니다.</li></ul><p>Three.js를 처음 불러오려면 인터넷이 필요합니다. ZIP에는 로컬 라이브러리 다운로드 도구와 인터넷 연결 없는 실행 방법이 포함되어 있습니다.</p></dialog>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ===========================================================
+   한국형 저상 전기 시내버스 | 교육용 가상 조립공장
+   Three.js r180 (ES modules) · 가상 공정 데이터, 실차 정보 아님
+   =========================================================== */
+const $=id=>document.getElementById(id);
+const stageData=[
+  {title:'섀시 프레임',sub:'강재 프레임 / 하부 플랫폼',desc:'하부 종방향 프레임과 횡방향 보강대를 조립해 차량의 기초 구조를 구성합니다.',detail:'하중을 지지하는 구조를 가상으로 결합합니다. 실제 제조 공법과 부품 크기는 단순화했습니다.'},
+  {title:'차축·바퀴',sub:'액슬 / 휠 / 서스펜션',desc:'전후 차축, 서스펜션, 타이어와 휠을 조립합니다.',detail:'버스의 하중을 지지하고 조향·제동·노면 충격 전달과 관련된 부품을 배치합니다.'},
+  {title:'배터리·전기 구동계',sub:'고전압 배터리 / 모터',desc:'하부 배터리 팩과 전기 구동 모듈을 설치합니다.',detail:'교육용 전기 버스의 배터리, 구동모터, 고전압 케이블을 간략한 개념 모델로 보여 줍니다.'},
+  {title:'차체 골격',sub:'기둥 / 횡보 / 지붕 프레임',desc:'측면 기둥과 지붕 골격을 차체 하부에 결합합니다.',detail:'외판과 유리를 지지하는 골격을 확인할 수 있습니다. 스페이스 프레임 구조를 교육용으로 단순화한 표현입니다.'},
+  {title:'외판·지붕 도장',sub:'외장 패널 / 도장 / 루프',desc:'도장된 외장 패널과 지붕을 부착합니다.',detail:'서울 간선버스에서 사용하는 파란색 계열을 기본값으로 설정했습니다. 제조사 로고가 없는 가상 외장입니다.'},
+  {title:'창문·출입문',sub:'안전유리 / 자동문 / 램프',desc:'전면·측면 유리, 승하차 출입문, 조명과 거울을 부착합니다.',detail:'유리와 프레임, 미닫이 방식의 가상 출입문을 연결합니다. 실제 제품과 문 구조는 다를 수 있습니다.'},
+  {title:'실내·편의시설',sub:'좌석 / 손잡이 / 운전석',desc:'객실 좌석, 손잡이, 운전대, 정보표시장치를 설치합니다.',detail:'탑승객 좌석과 입석 공간, 노란색 안전 손잡이를 구성합니다. 내부 시점에서 관찰해 보세요.'},
+  {title:'완성·품질 검사',sub:'전장 / 조명 / 기능 검사',desc:'LED 조명과 도어 작동을 가상 점검하고 최종 검사를 완료합니다.',detail:'가상 체크리스트가 PASS로 표시됩니다. 실제 검사 설비나 인증을 수행하지 않습니다.'}
+];
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x98abb5);scene.fog=new THREE.Fog(0xa3b4bf,32,85);
+const canvasHost=$('world');
+const camera=new THREE.PerspectiveCamera(43,1,.07,200);
+camera.position.set(-10.7,7.2,15.2);
+let renderer;
+try{
+ renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true,powerPreference:'high-performance'});
+ renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.65));
+ renderer.outputColorSpace=THREE.SRGBColorSpace;
+ renderer.toneMapping=THREE.ACESFilmicToneMapping;
+ renderer.toneMappingExposure=1.37;
+ renderer.shadowMap.enabled=true;
+ renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ canvasHost.appendChild(renderer.domElement);
+} catch(err) {
+ showFailure('WebGL 초기화 실패: '+(err?.message||err));
+ throw err;
+}
+const orbit=new OrbitControls(camera,renderer.domElement);
+orbit.target.set(0,2.02,0);
+orbit.enableDamping=true;orbit.dampingFactor=.065;
+orbit.minDistance=.45;orbit.maxDistance=40;
+orbit.maxPolarAngle=Math.PI*.72;
+orbit.enablePan=true;
+const hemi=new THREE.HemisphereLight(0xe9f5ff,0x65727b,2.25);scene.add(hemi);
+const sun=new THREE.DirectionalLight(0xffffff,3.05);
+sun.position.set(-7,16,9);sun.castShadow=true;sun.shadow.mapSize.set(window.innerWidth<800?1024:2048,window.innerWidth<800?1024:2048);
+sun.shadow.camera.left=-22;sun.shadow.camera.right=22;sun.shadow.camera.top=18;sun.shadow.camera.bottom=-18;
+sun.shadow.normalBias=.025;sun.shadow.bias=-.00005;scene.add(sun);
+const fill=new THREE.DirectionalLight(0xe7f5ff,1.05);fill.position.set(8,12,-9);scene.add(fill);
+const floorM=new THREE.MeshStandardMaterial({color:0xb5bfc6,roughness:.72,metalness:.10});
+const steel=new THREE.MeshStandardMaterial({color:0x697680,metalness:.78,roughness:.28});
+const darkSteel=new THREE.MeshStandardMaterial({color:0x39444e,metalness:.77,roughness:.35});
+const silver=new THREE.MeshStandardMaterial({color:0xc4cbd1,metalness:.75,roughness:.23});
+const metalBlack=new THREE.MeshStandardMaterial({color:0x202831,metalness:.65,roughness:.35});
+const rubber=new THREE.MeshStandardMaterial({color:0x171b1f,roughness:.93,metalness:.0});
+const safety=new THREE.MeshStandardMaterial({color:0xefb32b,metalness:.3,roughness:.36});
+const safetyRed=new THREE.MeshStandardMaterial({color:0xb83e36,metalness:.23,roughness:.46});
+const glass=new THREE.MeshPhysicalMaterial({color:0x244452,metalness:.26,roughness:.08,transmission:.12,transparent:true,opacity:.73,depthWrite:false,side:THREE.DoubleSide});
+const busPaint=new THREE.MeshPhysicalMaterial({color:0x006dc5,metalness:.37,roughness:.25,clearcoat:.82,clearcoatRoughness:.17});
+const roofPaint=new THREE.MeshPhysicalMaterial({color:0xe2e5e8,metalness:.24,roughness:.33,clearcoat:.65,clearcoatRoughness:.18});
+const trim=new THREE.MeshStandardMaterial({color:0x121d27,metalness:.35,roughness:.35});
+const upholstery=new THREE.MeshStandardMaterial({color:0x25415c,metalness:.02,roughness:.85});
+const seatInsert=new THREE.MeshStandardMaterial({color:0x347399,metalness:.02,roughness:.93});
+const seatFrame=new THREE.MeshStandardMaterial({color:0x727f8d,metalness:.7,roughness:.3});
+const ledWhite=new THREE.MeshStandardMaterial({color:0xeaf9ff,emissive:0xb9efff,emissiveIntensity:1.6,roughness:.22});
+const emissiveGreen=new THREE.MeshStandardMaterial({color:0x6ef5bd,emissive:0x24be86,emissiveIntensity:1.9});
+
+const G=(geo,mat,x=0,y=0,z=0)=>{const o=new THREE.Mesh(geo,mat);o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;return o;};
+function bx(parent,w,h,d,mat,x=0,y=0,z=0){const m=G(new THREE.BoxGeometry(w,h,d),mat,x,y,z);parent.add(m);return m;}
+function cyl(parent,r1,r2,h,mat,x=0,y=0,z=0,seg=24){const m=G(new THREE.CylinderGeometry(r1,r2,h,seg),mat,x,y,z);parent.add(m);return m;}
+function sph(parent,r,mat,x=0,y=0,z=0,sx=1,sy=1,sz=1){const m=G(new THREE.SphereGeometry(r,20,14),mat,x,y,z);m.scale.set(sx,sy,sz);parent.add(m);return m;}
+function tube(parent,points,r,mat){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));
+ const m=G(new THREE.TubeGeometry(curve,Math.max(12,points.length*7),r,8,false),mat);parent.add(m);return m;}
+function canvasLabel(text,wide=2.3,height=.44,fg='#e9f7ff',bg='#14324c',px=1120){
+ const c=document.createElement('canvas');c.width=px;c.height=Math.max(128,Math.round(px*height/wide));const ctx=c.getContext('2d');
+ ctx.fillStyle=bg;ctx.fillRect(0,0,c.width,c.height);
+ ctx.strokeStyle='#8ccbea55';ctx.lineWidth=8;ctx.strokeRect(5,5,c.width-10,c.height-10);
+ ctx.fillStyle=fg;ctx.font=`800 ${Math.round(c.height*.48)}px "Noto Sans KR", "Malgun Gothic",sans-serif`;
+ ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,c.width/2,c.height/2,c.width-32);
+ const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;return tex;
+}
+function labelPlane(parent,text,w,h,x,y,z,rotY=0,fg='#e8f6ff',bg='#153044'){
+ const t=canvasLabel(text,w,h,fg,bg);const m=G(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:t,side:THREE.DoubleSide,transparent:false}),x,y,z);m.rotation.y=rotY;m.castShadow=false;parent.add(m);return m;
+}
+
+/* 3D 실사풍 조립 공장 / 환기덕트·천장트러스·롤러라인 */
+const plant=new THREE.Group();scene.add(plant);
+bx(plant,46,.22,29,floorM,0,-.17,0);
+const floorLine=new THREE.MeshStandardMaterial({color:0xe8c359,metalness:.08,roughness:.75});
+for(const side of [-1,1]){
+ bx(plant,30,.012,.12,floorLine,0,.01,side*4.18);
+ for(let x=-13;x<=13;x+=2.6) bx(plant,.12,.012,.5,floorLine,x,.015,side*4.08);
+}
+const wallsMat=new THREE.MeshStandardMaterial({color:0xbccbd2,roughness:.88,metalness:.18,side:THREE.DoubleSide});
+bx(plant,46,10,.3,wallsMat,0,4.95,-13.7);
+bx(plant,.25,10,29,wallsMat,-22.9,4.95,0);
+bx(plant,.25,10,29,wallsMat,22.9,4.95,0);
+// 높은 창으로 오후빛이 드는 공장
+const windowMat=new THREE.MeshPhysicalMaterial({color:0x8bc2d8,metalness:.18,roughness:.14,transparent:true,opacity:.35,depthWrite:false});
+for(let x=-19;x<=19;x+=3.25){
+ bx(plant,2.55,2.2,.06,windowMat,x,7.55,-13.42);
+ bx(plant,2.6,.05,.11,darkSteel,x,6.4,-13.34);
+ bx(plant,.05,2.24,.12,darkSteel,x,7.55,-13.34);
+}
+// 넓은 지붕, H빔, 갠트리 레일
+for(let x=-20;x<=20;x+=5){
+ for(let z of [-12.4,12.4]) bx(plant,.38,9.5,.47,steel,x,4.65,z);
+ bx(plant,.3,.36,26,darkSteel,x,9.2,0);
+ for(let z=-12.2;z<=12.2;z+=4.05) bx(plant,.48,.23,.27,silver,x,9.06,z);
+}
+for(let z=-12;z<=12;z+=3) bx(plant,45,.18,.22,silver,0,9.43,z);
+for(let x=-19;x<=19;x+=7.6)for(let z=-8;z<=8;z+=8){
+ const light=new THREE.Mesh(new THREE.BoxGeometry(4,.065,.6),new THREE.MeshBasicMaterial({color:0xebfaff}));light.position.set(x,8.93,z);plant.add(light);
+ const l=new THREE.PointLight(0xe7f7ff,48,18,1.9);l.position.set(x,8.7,z);plant.add(l);
+}
+// 케이블 트레이 / 배기 덕트
+const ductMat=new THREE.MeshStandardMaterial({color:0x9faab0,metalness:.8,roughness:.32});
+bx(plant,42,.6,.7,ductMat,0,8.12,-8.2);
+for(let x=-18;x<=18;x+=4)bx(plant,.08,.7,.78,darkSteel,x,8.12,-8.2);
+// 공장 바닥 그리드 / 조립 컨베이어
+const rails=new THREE.MeshStandardMaterial({color:0x53616c,metalness:.85,roughness:.32});
+for(let z of [-2.03,2.03]) bx(plant,24,.3,.32,rails,0,.04,z);
+for(let x=-11.8;x<=11.8;x+=.55){let r=cyl(plant,.145,.145,3.8,silver,x,.10,0);r.rotation.x=Math.PI/2;r.castShadow=false;}
+for(let x of [-7.8,-2.2,3.2,8.4]){
+ for(let z of [-3.05,3.05]){
+  bx(plant,.8,.23,.8,safety,x,.18,z);
+  bx(plant,.18,.8,.2,steel,x,.65,z);
+  bx(plant,.5,.13,.46,darkSteel,x,1.02,z);
+ }
+}
+// 크레인 레일과 리프팅 후크
+for(let z of [-7.4,7.4]) bx(plant,35,.33,.40,safety,0,8.14,z);
+const crane=new THREE.Group();plant.add(crane);
+bx(crane,.6,.38,15.4,safety,0,8.05,0);
+bx(crane,1.3,.45,1.3,darkSteel,0,7.6,0);
+for(let z of [-.65,.65])tube(crane,[[0,7.45,z],[0,6.1,z],[0,5.55,z]],.033,steel);
+const hook=G(new THREE.TorusGeometry(.24,.055,10,24,Math.PI*1.55),safety,0,5.42,0);hook.rotation.z=Math.PI/2;crane.add(hook);
+// 산업용 로봇 팔 2대
+const robots=[];
+function makeRobot(x,z,mirror=1){
+ const r=new THREE.Group();r.position.set(x,0,z);plant.add(r);
+ bx(r,1.55,.27,1.42,steel,0,.16,0);
+ const base=cyl(r,.39,.51,.48,safety,0,.52,0);
+ const joint=new THREE.Group();joint.position.set(0,.8,0);r.add(joint);
+ sph(joint,.28,darkSteel,0,.08,0);
+ const link1=bx(joint,.40,1.50,.44,safety,0,.84,0);link1.rotation.z=mirror*.27;
+ sph(joint,.29,steel,mirror*-.21,1.53,0);
+ const arm= new THREE.Group();arm.position.set(mirror*-.22,1.54,0);joint.add(arm);
+ bx(arm,.36,1.18,.35,safety,mirror*.13,.5,0).rotation.z=mirror*-.24;
+ sph(arm,.22,steel,mirror*.28,1.13,0);
+ bx(arm,.38,.30,.35,darkSteel,mirror*.32,1.31,0);
+ const tool=cyl(arm,.085,.10,.25,metalBlack,mirror*.32,1.53,0);
+ robots.push({joint,arm,phase:x*.27});
+}
+makeRobot(-5.9,4.95,-1);makeRobot(4.7,-5.0,1);
+// 주변 팔레트와 작업대
+for(let x of [-15.2,12.9,17]){
+ const s=x<0?-1:1;
+ bx(plant,3.3,.28,1.48,steel,x,.66,-9.7);
+ for(let k=0;k<3;k++){bx(plant,.22,.7,.22,darkSteel,x-1.32+k*1.3,.24,-9.7);}
+ for(let k=0;k<4;k++){
+  const m=k%2===0?silver:darkSteel;
+  bx(plant,.43,.12,.52,m,x-1.18+k*.76,.9,-9.72);
+ }
+}
+for(let x of [-15.2,15.2])for(let z of [7,9]){
+ bx(plant,1.5,.85,1.25,new THREE.MeshStandardMaterial({color:x<0?0x7a8e9e:0x8a735e,roughness:.9}),x,.52,z);
+ for(let i=0;i<3;i++)bx(plant,1.52,.018,.026,darkSteel,x,.28+i*.2,z+.62);
+}
+labelPlane(plant,'KOREA E-BUS · SMART ASSEMBLY',9.0,.9,0,6.40,-13.46,0,'#e8f6ff','#124367');
+labelPlane(plant,'01   섀시 → 구동계 → 차체 → 실내 → 검사',6.2,.47,0,5.6,-13.45,0,'#a7f2ff','#183346');
+labelPlane(plant,'BAY 01',2.15,.52,-16,3.2,-13.47,0,'#ffda75','#234056');
+// 벽면 가상 작업 안전 표지
+labelPlane(plant,'안전모 · 안전화 착용',2.7,.47,16.7,3.2,-13.47,0,'#ffe8aa','#614728');
+
+/* ===========================================================
+   버스 모듈을 그룹 단위로 조립. 좌표계: 앞=-X, 출입문=+Z
+   =========================================================== */
+const bus=new THREE.Group();scene.add(bus);
+const parts=[];const materialDefaults=new Map();const leafDoors=[];
+function part(id,title,stage,info,group,from=[0,0,0],explode=[0,0,0],kind='mechanical'){
+  const record={id,title,stage,info,group,from:new THREE.Vector3(...from),explode:new THREE.Vector3(...explode),kind};
+  group.name=id;
+  group.traverse(o=>{if(o.isMesh){o.userData.partId=id;if(kind==='shell'||kind==='glass'){
+    const m=o.material;if((m===busPaint||m===roofPaint||m===glass)&&!materialDefaults.has(m))
+      materialDefaults.set(m,{transparent:m.transparent,opacity:m.opacity,depthWrite:m.depthWrite});
+  }}});
+  parts.push(record);bus.add(group);return record;
+}
+const frame=new THREE.Group();
+for(let z of [-.9,.9]){
+ bx(frame,10.28,.24,.16,steel,0,1.01,z);
+ bx(frame,10.1,.08,.065,silver,0,1.16,z);
+}
+for(let x=-4.72;x<=4.76;x+=.88)bx(frame,.14,.23,1.86,steel,x,1.01,0);
+bx(frame,10.5,.085,2.39,darkSteel,0,1.18,0);
+bx(frame,10.6,.10,.14,silver,0,1.18,-1.16);
+bx(frame,10.6,.10,.14,silver,0,1.18,1.16);
+for(let x of [-4.83,4.83])bx(frame,.23,.32,2.24,steel,x,.88,0);
+part('chassis','섀시·하부 프레임',0,'버스 차체를 지지하는 종방향 프레임과 횡보입니다.',frame,[-12,0,0],[0,-.45,0]);
+
+const wheelSystem=new THREE.Group();
+for(const x of [-3.76,3.46]){
+ const axle=cyl(wheelSystem,.17,.17,2.72,darkSteel,x,.58,0);axle.rotation.x=Math.PI/2;
+ for(const s of [-1,1]){
+  const z=s*1.27;
+  // 서스펜션 스트럿과 스프링
+  cyl(wheelSystem,.1,.1,.43,steel,x,.93,s*1.06);
+  for(let k=0;k<4;k++){
+   const sp=G(new THREE.TorusGeometry(.13,.02,6,14),safety,x,.72+k*.085,s*1.04);sp.rotation.x=Math.PI/2;wheelSystem.add(sp);
+  }
+  const wheel=new THREE.Group();wheel.position.set(x,.55,z);
+  const tire=G(new THREE.CylinderGeometry(.53,.53,.25,36),rubber);tire.rotation.x=Math.PI/2;wheel.add(tire);
+  const side=G(new THREE.CylinderGeometry(.40,.40,.266,36),metalBlack);side.rotation.x=Math.PI/2;wheel.add(side);
+  const rim=G(new THREE.CylinderGeometry(.31,.31,.281,36),silver);rim.rotation.x=Math.PI/2;wheel.add(rim);
+  const cap=G(new THREE.CylinderGeometry(.11,.11,.294,32),darkSteel);cap.rotation.x=Math.PI/2;wheel.add(cap);
+  for(let i=0;i<8;i++){
+   const a=i*Math.PI/4;
+   const spoke=bx(wheel,.068,.15,.025,steel,Math.sin(a)*.205,Math.cos(a)*.205,s*.156);
+   spoke.rotation.z=-a;
+   const lug=sph(wheel,.023,metalBlack,Math.sin(a)*.25,Math.cos(a)*.25,s*.17);
+  }
+  wheelSystem.add(wheel);
+ }
+}
+part('wheels','전후 차축·서스펜션·타이어',1,'두 차축에 타이어 네 개, 허브와 완충장치를 설치하는 교육용 모듈입니다.',wheelSystem,[0,-2.2,0],[0,-.2,.8]);
+
+const power=new THREE.Group();
+const battMat=new THREE.MeshStandardMaterial({color:0x394950,metalness:.62,roughness:.35});
+const cellMat=new THREE.MeshStandardMaterial({color:0x647e88,metalness:.53,roughness:.32});
+for(let x of [-2.25,-.45,1.35]){
+ bx(power,1.48,.34,1.45,battMat,x,.67,0);
+ for(let z of [-.5,-.25,0,.25,.5])bx(power,1.35,.04,.075,cellMat,x,.861,z);
+ bx(power,1.50,.06,1.48,steel,x,.49,0);
+}
+const motor=cyl(power,.40,.40,.88,steel,3.42,.68,0,32);motor.rotation.z=Math.PI/2;
+for(let i=0;i<8;i++)bx(power,.44,.17,.035,darkSteel,3.4,.68+Math.sin(i*Math.PI/4)*.39,Math.cos(i*Math.PI/4)*.39);
+bx(power,.72,.38,.52,darkSteel,4.27,.66,0);
+const orange=new THREE.MeshStandardMaterial({color:0xdd6b1d,metalness:.14,roughness:.3});
+tube(power,[[-2.3,.66,.88],[0,.65,.93],[2.25,.67,.9],[3.45,.73,.30]],.043,orange);
+tube(power,[[-2.3,.66,-.85],[.2,.60,-.86],[3.45,.73,-.30]],.043,orange);
+part('battery','고전압 배터리·전기 모터',2,'하부 배터리 팩에서 전력변환기를 거쳐 전기 구동 모터로 동력을 공급하는 개념 표현입니다.',power,[0,-2.1,0],[0,-1.0,0]);
+
+const skeleton=new THREE.Group();
+for(let z of [-1.17,1.17]){
+ bx(skeleton,10.42,.11,.10,silver,0,3.30,z);
+ bx(skeleton,10.42,.09,.09,steel,0,2.06,z);
+ for(let x of [-5.04,-3.78,-2.43,-1.1,.31,1.58,3.03,4.42,5.04]){
+   bx(skeleton,.095,2.18,.11,silver,x,2.26,z);
+ }
+}
+for(let x of [-5.04,-3.05,-1.08,.92,2.9,5.04]) bx(skeleton,.10,.095,2.42,silver,x,3.35,0);
+for(let x of [-5.17,5.17])for(let z of [-1.12,1.12])bx(skeleton,.13,2.27,.12,steel,x,2.25,z);
+part('skeleton','차체 필러·지붕 구조재',3,'측면 기둥, 상부 횡보, 전후 구조 부재로 이루어진 객실 골격입니다.',skeleton,[0,4.8,0],[0,0,0]);
+
+// 외장 패널, 4단계부터 보임
+const nearShell=new THREE.Group();
+bx(nearShell,10.56,.81,.095,busPaint,0,1.57,1.215);
+bx(nearShell,10.5,.20,.10,roofPaint,0,3.27,1.22);
+bx(nearShell,10.53,.065,.10,trim,0,2.00,1.263);
+bx(nearShell,10.55,.035,.085,silver,0,1.22,1.285);
+part('shell-near','승객 출입 측면 도장 외판',4,'도장 후 외부에 부착되는 측면 패널입니다. 파랑·초록·빨강·노랑 색상을 변경해 보세요.',nearShell,[0,0,4.2],[0,0,1.15],'shell');
+const farShell=new THREE.Group();
+bx(farShell,10.56,.81,.095,busPaint,0,1.57,-1.215);
+bx(farShell,10.5,.20,.10,roofPaint,0,3.27,-1.22);
+bx(farShell,10.55,.035,.085,silver,0,1.22,-1.285);
+part('shell-far','반대편 측면 차체 외판',4,'단열·외관을 위한 반대편 차체 외장 패널입니다.',farShell,[0,0,-4.1],[0,0,-1.12],'shell');
+const frontShell=new THREE.Group();
+bx(frontShell,.16,.92,2.36,busPaint,-5.27,1.51,0);
+bx(frontShell,.12,.21,2.35,trim,-5.39,3.22,0);
+bx(frontShell,.16,.21,2.38,steel,-5.32,1.06,0);
+// 전조등·주간주행등·와이퍼
+for(let z of [-.93,.93]){
+ bx(frontShell,.036,.13,.32,ledWhite,-5.416,1.63,z);
+ bx(frontShell,.038,.09,.36,trim,-5.428,1.81,z);
+}
+for(let z of [-.78,.78]){
+ const wipe=bx(frontShell,.028,.025,.89,metalBlack,-5.436,2.06,z*.50);wipe.rotation.x=.21;
+}
+labelPlane(frontShell,'701  서울 시내버스',1.83,.26,-5.42,3.22,0,-Math.PI/2,'#f3e691','#081924');
+part('front','전면 외판·범퍼·전조등',4,'전면 범퍼와 LED 표시등, 가상 노선 전광판을 구성합니다.',frontShell,[-4,0,0],[-1.1,0,0],'shell');
+const rearShell=new THREE.Group();
+bx(rearShell,.18,2.10,2.38,busPaint,5.27,2.06,0);
+bx(rearShell,.20,.20,2.44,steel,5.38,1.14,0);
+for(let z of [-1.03,1.03]){bx(rearShell,.04,.54,.14,safetyRed,5.39,2.0,z);bx(rearShell,.05,.12,.15,ledWhite,5.40,1.52,z);}
+part('rear','후면 패널·후미등',4,'후면 외장, 후미등, 점검 커버를 표현합니다.',rearShell,[4,0,0],[1.13,0,0],'shell');
+const roof=new THREE.Group();
+bx(roof,10.63,.20,2.53,roofPaint,0,3.45,0);
+for(let x of [-2.45,-.6,1.75,3.52]){
+ bx(roof,1.25,.29,1.64,roofPaint,x,3.66,0);
+ for(let z of [-.73,.73])bx(roof,1.18,.065,.035,steel,x,3.81,z);
+}
+// 작은 HVAC 핀
+for(let x=2.58;x<4.48;x+=.15)bx(roof,.06,.16,1.09,steel,x,3.79,0);
+part('roof','지붕·전기설비 하우징',4,'지붕 패널과 상부 공조·전장 하우징을 단순화하여 보여 줍니다.',roof,[0,4.3,0],[0,1.7,0],'shell');
+
+const glazing=new THREE.Group();
+// 전방 대형 파노라마 유리. x=-5.38
+bx(glazing,.055,1.22,2.24,glass,-5.36,2.61,0);
+for(let z of [-1.12,1.12])bx(glazing,.065,1.36,.06,trim,-5.39,2.62,z);
+bx(glazing,.05,.08,2.30,trim,-5.38,3.26,0);
+// 뒤쪽 유리
+bx(glazing,.055,.91,1.94,glass,5.37,2.65,0);
+// 양측 창: 도어 영역 제외한 일반 창
+for(const side of [-1,1]){
+ for(const [x,w] of [[-2.69,1.43],[-1.25,1.37],[2.25,1.34],[3.58,1.22],[4.57,.58]]){
+   if(side===1&&x===4.57)continue;
+   bx(glazing,w,1.07,.045,glass,x,2.60,side*1.28);
+   bx(glazing,.045,1.13,.065,trim,x+w/2+.02,2.60,side*1.28);
+   bx(glazing,.045,1.13,.065,trim,x-w/2-.02,2.60,side*1.28);
+ }
+}
+part('glass','전면 파노라마·측면 안전유리',5,'차량 외부 시야 확보용 유리와 창틀을 장착합니다. 짙은 청록 계열 반투명 재질입니다.',glazing,[0,3.4,0],[0,0,2.15],'glass');
+const doorModule=new THREE.Group();
+const leafMat=new THREE.MeshPhysicalMaterial({color:0x1b303b,metalness:.35,roughness:.1,transparent:true,opacity:.75,depthWrite:false});
+materialDefaults.set(leafMat,{transparent:leafMat.transparent,opacity:leafMat.opacity,depthWrite:leafMat.depthWrite});
+for(const doorX of [-4.09,.43]){
+ const doorFrame=new THREE.Group();doorModule.add(doorFrame);
+ for(const sx of [-1,1]){
+  const leaf=new THREE.Group();leaf.position.set(doorX+sx*.31,0,0);doorFrame.add(leaf);
+  bx(leaf,.59,1.82,.055,leafMat,0,2.12,1.323);
+  bx(leaf,.050,1.92,.066,trim,sx*.27,2.12,1.358);
+  bx(leaf,.58,.09,.075,trim,0,3.04,1.355);
+  bx(leaf,.58,.08,.072,safety,0,1.23,1.36);
+  bx(leaf,.023,.35,.08,silver,-sx*.23,2.08,1.39);
+  leafDoors.push({group:leaf,baseX:doorX+sx*.31,side:sx});
+ }
+ for(let dx of [-.635,.635])bx(doorFrame,.055,1.93,.081,trim,doorX+dx,2.15,1.34);
+}
+part('doors','저상버스 승하차 출입문',5,'승하차용 이중 미닫이문을 열고 닫아 출입 공간을 확인합니다.',doorModule,[0,2.7,0],[0,0,2.24],'glass');
+const lamps=new THREE.Group();
+for(const z of [-1.5,1.5]){
+ bx(lamps,.43,.18,.11,trim,-5.0,2.71,z);
+ const mirror=G(new THREE.SphereGeometry(.16,20,14),silver,-5.02,2.72,z*1.05);mirror.scale.set(.6,1.22,.84);lamps.add(mirror);
+ tube(lamps,[[-5.03,2.64,z*.84],[-5.13,2.8,z],[ -5.13,2.79,z*1.05]],.028,trim);
+}
+for(let x of [-3.6,-1.5,.9,3.2])bx(lamps,1.1,.034,.10,ledWhite,x,3.29,0);
+labelPlane(lamps,'친환경 전기버스',3.25,.30,1.8,1.63,1.345,0,'#ffffff','#0066b2');
+labelPlane(lamps,'701',.59,.28,-1.3,3.13,1.34,0,'#ffe28a','#102a3e');
+part('lights','LED 조명·사이드미러·전광판',5,'전조등, 실내 조명과 미러 등 외부 장비를 결합하는 단계입니다.',lamps,[0,1.8,0],[0,.30,.75]);
+
+const cabin=new THREE.Group();
+const poles=new THREE.MeshStandardMaterial({color:0xe2b72b,metalness:.35,roughness:.33});
+// 바닥 통로와 계단 최소화된 저상 구조
+bx(cabin,10.1,.065,2.27,new THREE.MeshStandardMaterial({color:0x747e85,roughness:.85}),.01,1.25,0);
+bx(cabin,9.9,.015,.76,new THREE.MeshStandardMaterial({color:0x454e56,roughness:.92}),0,1.30,0);
+// 두 줄 승객 좌석
+for(const [xi,ri] of [[-2.85,0],[-1.97,1],[-1.10,2],[1.76,3],[2.64,4],[3.53,5],[4.34,6]]){
+ for(const side of [-1,1]){
+  const cz=side*.76;
+  // near middle door leave gap
+  if(xi>-.1&&xi<1.55)continue;
+  bx(cabin,.53,.12,.48,upholstery,xi,1.72,cz);
+  bx(cabin,.12,.67,.51,upholstery,xi+.19,2.10,cz);
+  bx(cabin,.08,.44,.46,seatInsert,xi+.253,2.11,cz);
+  bx(cabin,.47,.045,.41,seatInsert,xi,1.80,cz);
+  bx(cabin,.055,.37,.055,seatFrame,xi-.18,1.47,cz);
+  bx(cabin,.055,.37,.055,seatFrame,xi+.18,1.47,cz);
+ }
+}
+// 입석 손잡이
+for(const x of [-3.0,-1.9,-.85,.75,1.7,2.7,3.7,4.56]){
+ cyl(cabin,.026,.026,1.64,poles,x,2.28,0);
+ const handle=G(new THREE.TorusGeometry(.10,.018,8,22),poles,x,2.63,.24);cabin.add(handle);
+}
+bx(cabin,9.6,.057,.052,poles,.01,3.13,0);
+for(const z of [-1.05,1.05])bx(cabin,8.6,.047,.047,poles,.22,2.99,z);
+// 운전석 (전방 -X, 운전석은 반대편 -Z)
+bx(cabin,.74,.18,.58,upholstery,-4.43,1.69,-.62);
+bx(cabin,.15,.88,.61,upholstery,-4.09,2.02,-.62);
+bx(cabin,.68,.41,.62,metalBlack,-4.93,1.94,-.65);
+const steering=G(new THREE.TorusGeometry(.19,.027,12,36),trim,-4.54,2.14,-.65);steering.rotation.y=Math.PI/2;steering.rotation.z=.23;cabin.add(steering);
+bx(cabin,.055,.11,.20,ledWhite,-4.96,2.20,-.60);
+bx(cabin,.12,.43,.21,silver,-3.65,1.68,1.01);
+bx(cabin,.20,.10,.18,trim,-3.65,1.95,1.01);
+part('interior','실내 좌석·승객 손잡이·운전석',6,'저상 객실, 운전석, 승객 좌석, 서서 타는 승객을 위한 안전 손잡이입니다.',cabin,[0,4.3,0],[0,.58,0]);
+
+// 최종 검사에 조명 레이저 커튼만 추가
+const qa=new THREE.Group();
+const scannerMat=new THREE.MeshStandardMaterial({color:0x20d4ac,emissive:0x12b982,emissiveIntensity:1.35,transparent:true,opacity:.85});
+for(const x of [-4.7,4.7]){
+ for(const z of [-1.56,1.56]) bx(qa,.08,3.12,.08,scannerMat,x,2.22,z);
+ bx(qa,.08,.08,3.15,scannerMat,x,3.78,0);
+}
+labelPlane(qa,'VIRTUAL QA   ✓ PASS',3.05,.34,0,4.45,-.3,0,'#acfce5','#134d42');
+part('qa','최종 가상 품질검사',7,'외관, 도어, 전장, 실내 조립을 점검하는 가상 연출입니다. 실제 품질 인증이 아닙니다.',qa,[0,3,0],[0,.4,0]);
+
+/* ===========================================================
+   상호작용 상태, 단계별 자동 조립과 X-Ray
+   =========================================================== */
+const state={stage:0,auto:false,speed:1,door:false,xray:false,explode:false,spin:false,transTime:1.4,hold:0,selected:null,view:'overview'};
+const v3=(x,y,z)=>new THREE.Vector3(x,y,z);
+function applyXray(){
+ materialDefaults.forEach((s,m)=>{
+   m.transparent=state.xray?true:s.transparent;
+   m.opacity=state.xray ? ((m===glass || m===leafMat) ? 0.17 : 0.24) : s.opacity;
+   m.depthWrite=state.xray?false:s.depthWrite;
+   m.needsUpdate=true;
+ });
+}
+const colors={blue:'#006dc5',green:'#228c6c',red:'#ba3a4e',yellow:'#dba831'};
+function changePaint(color){
+ busPaint.color.set(colors[color]||colors.blue);
+ $('log').dataset.lastColor=color;
+ document.querySelectorAll('.swatch').forEach(b=>b.classList.toggle('selected',b.dataset.color===color));
+ log('도장 색상 변경: '+({blue:'간선 파랑',green:'지선 초록',red:'광역 빨강',yellow:'순환 노랑'}[color]||color));
+}
+function log(message){
+ const div=document.createElement('div');const t=document.createElement('time');t.textContent=new Date().toLocaleTimeString('ko-KR',{hour12:false});
+ const p=document.createElement('span');p.textContent=message;div.append(t,p);
+ $('log').prepend(div);while($('log').children.length>8)$('log').lastElementChild.remove();
+}
+let selectedMeshMat=null;
+function resetHighlight(){
+ if(state.selected){state.selected.group.traverse(o=>{
+  if(o.isMesh&&o.userData.originalEmissive){o.material.emissive.copy(o.userData.originalEmissive);o.material.emissiveIntensity=o.userData.originalEmissiveIntensity;delete o.userData.originalEmissive;}
+ });}
+ state.selected=null;
+}
+function selectPart(id){
+ const p=parts.find(p=>p.id===id&&p.stage<=state.stage);if(!p)return;
+ resetHighlight();state.selected=p;
+ p.group.traverse(o=>{
+  if(o.isMesh&&o.material?.emissive&&!o.userData.originalEmissive){
+   o.userData.originalEmissive=o.material.emissive.clone();o.userData.originalEmissiveIntensity=o.material.emissiveIntensity;
+   // 공유 재질의 전체 차체가 번쩍이는 것을 방지하기 위해 강한 발광 대신 정보 강조
+  }
+ });
+ $('part-detail').innerHTML=`<div class="part-icon">▣</div><b>${p.title}</b><p>${p.info}</p><small style="font-size:10px;color:#68c1e7">설치 단계: ${String(p.stage+1).padStart(2,'0')} / 08</small>`;
+ $('hotspot').hidden=false;$('hotspot').textContent=p.title;
+}
+function uiStage(){
+ const idx=state.stage,d=stageData[idx];
+ $('step-no').textContent=String(idx+1).padStart(2,'0');$('step-title').textContent=d.title;$('step-desc').textContent=d.desc;
+ $('progress-fill').style.width=`${(idx+1)*12.5}%`;
+ $('kpi-progress').innerHTML=`${((idx+1)*12.5).toFixed(1)}<em>%</em>`;
+ $('kpi-modules').innerHTML=`${String(idx+1).padStart(2,'0')}<em>/ 08</em>`;
+ $('kpi-quality').textContent=idx===7?'가상 PASS':'준비';
+ $('explain-title').textContent=`${String(idx+1).padStart(2,'0')} · ${d.title}`;$('explain-text').textContent=d.detail;
+ $('state-pill').textContent=state.auto?'자동 조립 중':idx===7?'가상 검사 완료':'수동 확인';
+ $('kpi-status').textContent=state.auto?'조립 중':idx===7?'완료':'대기';
+ $('play').textContent=state.auto?'Ⅱ 일시 정지':'▶ 자동 실행';
+ document.querySelectorAll('.stage').forEach(b=>{
+  const i=Number(b.dataset.stage);b.classList.toggle('active',i===idx);b.classList.toggle('done',i<idx);
+  b.querySelector('.check').textContent=i<idx?'✓':i===idx?'●':'○';
+ });
+ $('prev').disabled=idx===0;
+ $('next').disabled=idx===7;
+ $('door').disabled=idx<5;
+ $('explode').classList.toggle('toggled',state.explode);
+ $('xray').classList.toggle('toggled',state.xray);
+ $('spin').classList.toggle('toggled',state.spin);
+}
+function setStage(value,immediate=false){
+ const n=Math.max(0,Math.min(7,value));const previous=state.stage;
+ state.stage=n;state.transTime=immediate?2:0;state.hold=0;
+ if(n<5){state.door=false;$('door').textContent='도어 열기';}
+ if(state.selected && state.selected.stage>n){resetHighlight();$('part-detail').innerHTML='<div class="part-icon">⊞</div><b>부품을 선택하세요</b><p>조립된 부품을 클릭해 구조를 확인할 수 있습니다.</p>';$('hotspot').hidden=true;}
+ for(const p of parts){
+  p.group.visible=p.stage<=n;
+  if(!p.group.visible)continue;
+  if(immediate || p.stage<n || previous>n){p.group.position.copy(state.explode?p.explode:v3(0,0,0));}
+  else if(p.stage===n&&previous!==n){p.group.position.copy(p.from);}
+ }
+ uiStage();
+ if(!immediate)log(`[${String(n+1).padStart(2,'0')}] ${stageData[n].title} 단계 선택`);
+ if(n===7 && !state.auto)log('가상 최종 검수 단계 진입');
+}
+function advance(d=1){setStage(state.stage+d);}
+function autoToggle(){
+ if(state.stage===7&&!state.auto)setStage(0);
+ state.auto=!state.auto;
+ state.hold=0;uiStage();log(state.auto?'자동 조립 시퀀스 시작':'자동 조립 일시 정지');
+}
+function openDoors(){
+ if(state.stage<5)return;
+ state.door=!state.door;$('door').textContent=state.door?'도어 닫기':'도어 열기';
+ log(state.door?'가상 출입문 개방':'가상 출입문 닫힘');
+}
+function setExplode(){state.explode=!state.explode;uiStage();log(state.explode?'부품 분해 보기 ON':'조립 보기 복원');}
+
+const viewPresets={
+ overview:{cam:[-10.7,7.2,15.2],target:[0,2,0]},
+ side:{cam:[-.2,4.1,15.5],target:[0,2,0]},
+ front:{cam:[-14.8,3.1,.06],target:[0,2.3,0]},
+ rear:{cam:[13.5,3.9,-2.0],target:[0,2.2,0]},
+ cabin:{cam:[-.6,2.54,.03],target:[-3.45,2.45,-.06]},
+ top:{cam:[-1.5,15.4,4.2],target:[0,1.4,0]},
+ under:{cam:[.2,.56,12.6],target:[0,.83,0]}
+};
+let camMove=null;
+function setView(id){
+ if(!viewPresets[id])return;
+ state.view=id;
+ document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
+ if(id==='cabin'){
+  if(state.stage<6)setStage(6);
+  if(!state.xray){state.xray=true;applyXray();uiStage();}
+ }
+ const v=viewPresets[id];camMove={pos:new THREE.Vector3(...v.cam),target:new THREE.Vector3(...v.target)};
+ orbit.minDistance=id==='cabin'?.24:.45;
+ log('관찰 카메라: '+({overview:'사선 전경',side:'측면',front:'전면',rear:'후면',cabin:'실내',top:'상부',under:'하부'}[id]));
+}
+const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
+let press=null;
+renderer.domElement.addEventListener('pointerdown',e=>{press={x:e.clientX,y:e.clientY};});
+renderer.domElement.addEventListener('pointerup',e=>{
+ if(!press||Math.hypot(e.clientX-press.x,e.clientY-press.y)>6){press=null;return;}press=null;
+ const rect=renderer.domElement.getBoundingClientRect();pointer.set((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);
+ raycaster.setFromCamera(pointer,camera);
+ const valid=[];for(const p of parts)if(p.stage<=state.stage&&p.group.visible)p.group.traverse(o=>{if(o.isMesh)valid.push(o)});
+ const hit=raycaster.intersectObjects(valid,false).find(v=>v.object.userData.partId);
+ if(hit)selectPart(hit.object.userData.partId);
+});
+
+// 제어 이벤트
+$('stage-list').replaceChildren();
+stageData.forEach((d,i)=>{
+ const b=document.createElement('button');b.className='stage';b.dataset.stage=i;
+ b.innerHTML=`<span class="stage-num">${String(i+1).padStart(2,'0')}</span><span><strong>${d.title}</strong><small>${d.sub}</small></span><span class="check">○</span>`;
+ b.addEventListener('click',()=>{state.auto=false;setStage(i);closeMobile();});$('stage-list').append(b);
+});
+$('prev').addEventListener('click',()=>{state.auto=false;advance(-1);});
+$('next').addEventListener('click',()=>{state.auto=false;advance(1);});
+$('play').addEventListener('click',autoToggle);
+$('reset').addEventListener('click',()=>{state.auto=false;state.explode=false;state.xray=false;applyXray();setStage(0,true);setView('overview');log('전체 공정 초기화');});
+$('door').addEventListener('click',openDoors);
+$('explode').addEventListener('click',setExplode);
+$('xray').addEventListener('click',()=>{state.xray=!state.xray;applyXray();uiStage();log(state.xray?'차체 X-RAY 반투명 모드':'차체 일반 표시');});
+$('spin').addEventListener('click',()=>{state.spin=!state.spin;orbit.autoRotate=state.spin;orbit.autoRotateSpeed=.9;uiStage();});
+$('fit').addEventListener('click',()=>setView('overview'));
+$('speed').addEventListener('change',e=>{state.speed=Number(e.target.value)||1;log('시퀀스 속도 '+state.speed+'×');});
+$('screenshot').addEventListener('click',()=>{
+ try{
+  renderer.render(scene,camera);
+  const a=document.createElement('a');a.download=`korean-bus-assembly-stage-${state.stage+1}.png`;
+  a.href=renderer.domElement.toDataURL('image/png');a.click();
+  log('화면 PNG 저장');
+ }catch(err){log('이미지를 저장하지 못했습니다.');}
+});
+$('info-button').addEventListener('click',()=>$('help').showModal());
+$('close-help').addEventListener('click',()=>$('help').close());
+$('help').addEventListener('click',e=>{if(e.target===$('help'))$('help').close();});
+for(const b of document.querySelectorAll('[data-color]')) b.addEventListener('click',()=>changePaint(b.dataset.color));
+for(const b of document.querySelectorAll('[data-view]'))b.addEventListener('click',()=>setView(b.dataset.view));
+const mobileMask=$('mobile-mask');
+$('menu-toggle').addEventListener('click',()=>{$('sidebar').classList.toggle('open');mobileMask.classList.toggle('open');});
+function closeMobile(){$('sidebar').classList.remove('open');mobileMask.classList.remove('open');}
+mobileMask.addEventListener('click',closeMobile);
+window.addEventListener('keydown',e=>{if(e.target.closest('input,textarea,select'))return;if(e.code==='Space'){e.preventDefault();autoToggle();}if(e.key==='ArrowRight'){state.auto=false;advance(1);}if(e.key==='ArrowLeft'){state.auto=false;advance(-1);}if(e.key==='Escape')closeMobile();});
+function resize(){const w=canvasHost.clientWidth,h=canvasHost.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+window.addEventListener('resize',resize);new ResizeObserver(resize).observe(canvasHost);resize();
+
+/* animation loop */
+const clock=new THREE.Clock();let runtime=0,telemetry=0;
+setStage(7,true);applyXray();log('완성된 버스 미리보기 · 자동 실행을 누르면 1단계부터 조립');
+window.__busReady=true;$('loading').hidden=true;$('fallback').hidden=true;
+renderer.setAnimationLoop(()=>{
+ const dt=Math.min(clock.getDelta(),.07);runtime+=dt;
+ const scaled=dt*state.speed;
+ if(state.transTime<1.4)state.transTime=Math.min(1.4,state.transTime+scaled);
+ const tween=Math.min(1,state.transTime/1.4),ease=1-Math.pow(1-tween,3);
+ for(const p of parts){
+  if(!p.group.visible)continue;
+  const pos=state.explode?p.explode:v3(0,0,0);
+  if(p.stage===state.stage&&tween<1)pos.addScaledVector(p.from,1-ease);
+  p.group.position.lerp(pos,Math.min(1,dt*6.5));
+ }
+ for(const d of leafDoors){const target=d.baseX+(state.door?d.side*.34:0);d.group.position.x=THREE.MathUtils.lerp(d.group.position.x,target,Math.min(1,dt*5));}
+ if(state.auto){
+  if(tween>=1)state.hold+=scaled;
+  if(state.hold>2.05){
+   if(state.stage<7)setStage(state.stage+1);
+   else {state.auto=false;uiStage();log('가상 품질검사 시퀀스 종료');}
+  }
+ }
+ for(const r of robots){
+   const k=state.auto?.085:.045;
+   r.joint.rotation.y=Math.sin(runtime*.45+r.phase)*k;
+   r.arm.rotation.z=Math.sin(runtime*.9+r.phase)*k*1.25;
+ }
+ crane.position.x=Math.sin(runtime*.2)*.20;
+ if(camMove){
+  camera.position.lerp(camMove.pos,Math.min(1,dt*3.2));orbit.target.lerp(camMove.target,Math.min(1,dt*3.2));
+  if(camera.position.distanceTo(camMove.pos)<.015&&orbit.target.distanceTo(camMove.target)<.015)camMove=null;
+ }
+ orbit.update();renderer.render(scene,camera);
+ telemetry+=dt;if(telemetry>.5){telemetry=0;$('kpi-status').textContent=state.auto?'조립 중':state.stage===7?'완료':'대기';}
+});
+function showFailure(message){const l=$('loading');if(l)l.hidden=true;const f=$('fallback');if(f)f.hidden=false;$('error-text').textContent=message;}
+
+</script>
+<script>
+// 모듈 가져오기에 실패하면 빈 화면을 피하고 명시적 진단 메시지를 제공합니다.
+window.__busReady=false;
+window.addEventListener('load',()=>{setTimeout(()=>{if(!window.__busReady){const loading=document.getElementById('loading');if(loading)loading.hidden=true;document.getElementById('fallback').hidden=false;document.getElementById('error-text').textContent='Three.js 모듈이 로드되지 않았습니다. 네트워크/로컬 서버/콘솔을 확인하세요.';document.getElementById('kpi-progress').textContent='—';document.getElementById('kpi-status').textContent='3D 미연결';}},12000);});
+document.getElementById('retry').addEventListener('click',()=>location.reload());
+</script>
+</body></html>
